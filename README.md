@@ -178,6 +178,7 @@ src
 ---
 
 ## ✅ **To Do**  
+- [ ] Add Smooth transition animation between product list and product detail
 - [ ] Add count badge for whislist and cart
 - [ ] Improve UI/UX for Better Engagement  
 

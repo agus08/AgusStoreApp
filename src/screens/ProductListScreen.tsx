@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   TextInput,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -63,25 +64,33 @@ const ProductListScreen = () => {
   };
 
   //  Render Individual Product Card
-  const renderItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity
-      style={styles.productCard}
-      onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
-    >
-      <Image source={{ uri: item.thumbnail }} style={styles.image} />
-      <Text style={styles.title} numberOfLines={1}>
-        {item.title}
-      </Text>
-      <Text style={styles.price}>${item.price}</Text>
-      <Text style={styles.review}>
-        <Icon name='star' color="orange" />
-        {item.rating.toFixed(1)} | {item.reviews.length} Reviews
-      </Text>
-    </TouchableOpacity>
+  const renderItem = useCallback(
+    ({ item }: { item: Product }) => (
+      <TouchableOpacity
+        style={styles.productCard}
+        onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
+      >
+        <Image source={{ uri: item.thumbnail }} style={styles.image} />
+        <Text style={styles.title} numberOfLines={1}>
+          {item.title}
+        </Text>
+        <Text style={styles.price}>${item.price}</Text>
+        <Text style={styles.review}>
+          <Icon name='star' color="orange" />
+          {item.rating.toFixed(1)} | {item.reviews.length} Reviews
+        </Text>
+      </TouchableOpacity>
+    ),
+    [navigation]
   );
 
   //  Render Skeleton Loader for Loading State
   const renderSkeleton = () => <ProductSkeleton />;
+
+  const skeletonData = useMemo(() => Array.from({ length: 6 }) as any[], []);
+
+  const screenWidth = Dimensions.get('window').width;
+  const numColumns = Math.floor(screenWidth / 160); // 160px per card
 
   return (
     <View style={[
@@ -110,10 +119,10 @@ const ProductListScreen = () => {
 
       {/*  Product List */}
       <FlatList
-        data={loading ? Array.from({ length: 6 }) as any[] : products}
+        data={loading ? skeletonData as any[] : products}
         keyExtractor={(item, index) => loading ? index.toString() : item.id.toString()}
         renderItem={loading ? renderSkeleton : renderItem}
-        numColumns={2} //  Display 2 items per row
+        numColumns={numColumns} //  Display 2 items per row
         columnWrapperStyle={styles.columnWrapper} //  Spacing between items
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

@@ -106,17 +106,7 @@ const ProductDetailScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/*  Product Images */}
-      <FlatList
-        data={product.images}
-        horizontal
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <Image source={{ uri: item }} style={styles.image} />
-        )}
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-      />
-
+      <Image source={{ uri: product?.thumbnail }} style={styles.image} />
       {/* Product Details */}
       <Text style={styles.title}>{product.title}</Text>
       <Text style={styles.description}>{product.description}</Text>
@@ -164,7 +154,7 @@ const ProductDetailScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: '#fff',
     flex: 1,
   },
@@ -183,10 +173,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-    width: 300,
-    height: 300,
+    width: '100%',
+    height: 250,
     borderRadius: 12,
-    marginRight: 8,
   },
   title: {
     fontSize: 22,

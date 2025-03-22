@@ -1,97 +1,184 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 📱 **React Native Simple E-Commerce App**  
 
-# Getting Started
+This is a simple functional **E-Commerce app** built with **React Native** using **Redux Toolkit** for state management and **React Navigation** for seamless screen transitions. The app includes essential features such as:  
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+- 🛒 Product listing with search and category filters  
+- ❤️ Wishlist feature with local storage persistence  
+- 🛍️ Add to cart, update quantity, and swipe to delete  
+- 📦 Checkout process with an order summary  
+- 🌟 Product details with reviews and rating  
 
-## Step 1: Start Metro
+---  
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🚀 **Features**  
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### ✅ **1. Product Listing**
+- Display products in a grid format (2 items per row)  
+- Search functionality with debounce for performance  
+- Category-based filtering  
+- Skeleton loader while fetching products  
 
-```sh
-# Using npm
+---
+
+### ✅ **2. Product Details**
+- View detailed product information  
+- Add product to cart  
+- Add product to wishlist (persistent via local storage)  
+
+---
+
+### ✅ **3. Wishlist**
+- Save products to wishlist  
+- Remove products from wishlist  
+- Sync across sessions using AsyncStorage  
+
+---
+
+### ✅ **4. Cart**
+- Add/remove items to/from cart  
+- Change quantity directly in the cart  
+- Swipe to delete  
+- Checkbox for selecting items for checkout  
+- Display total based on selected items  
+
+---
+
+### ✅ **5. Checkout**
+- Display order summary in a bottom sheet  
+- Dynamic total calculation based on selected items  
+
+---
+
+## 🏎️ **Optimizations and Best Practices**  
+
+### 🔥 **1. Performance Optimizations**
+✅ **Memoization** using `React.memo` and `useCallback` to prevent unnecessary renders.  
+✅ **Virtualized List** using `FlatList` for efficient rendering of large lists.  
+✅ **Optimized State Management** with Redux Toolkit to avoid prop drilling and reduce state complexity.  
+✅ **Batch Updates** by using Redux `createAsyncThunk` for API calls to avoid race conditions.  
+✅ **Skeleton Loaders** while fetching data to enhance UX.  
+
+---
+
+### 💾 **2. Efficient Local Storage Handling**
+✅ Products in the wishlist are persisted using `AsyncStorage`.  
+✅ Wishlist state is hydrated on app launch for a seamless experience.  
+
+---
+
+### ✨ **3. Clean Navigation Structure**
+✅ `React Navigation` for managing nested stacks and tab navigation.  
+✅ Safe area handling using `react-native-safe-area-context` to avoid UI overlap.  
+✅ Deep linking support and consistent navigation props handling.  
+
+---
+
+## 💻 **Tech Stack**  
+| Technology | Purpose |  
+|------------|---------|  
+| **React Native** | Core framework |  
+| **Redux Toolkit** | State management |  
+| **React Navigation** | Navigation |  
+| **AsyncStorage** | Local storage |  
+| **Axios/Fetch** | API calls |  
+| **Swipeable** | Swipe actions |  
+| **BottomSheet** | Order summary modal |  
+| **React Native Vector Icons** | Icons |  
+
+---
+
+## ⚙️ **Installation**  
+
+1. Clone the repository:  
+```bash
+git clone https://github.com/agus08/AgusStoreApp.git
+```
+
+2. Install dependencies:  
+```bash
+npm install
+```
+
+3. Install CocoaPods (iOS only):  
+```bash
+cd ios && pod install
+```
+
+4. Start the metro in independent terminal:  
+```bash
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+4. Run the app:  
+```bash
 npm run android
-
-# OR using Yarn
-yarn android
+npx run ios
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 🔑 **API Reference**  
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+### 📥 **Fetch Products**
+```bash
+GET https://dummyjson.com/products
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
+### 📥 **Search Products**
+```bash
+GET https://dummyjson.com/products/search?q=<query>
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+### 📥 **Fetch Categories**
+```bash
+GET https://dummyjson.com/products/categories
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 📥 **Fetch Product Details**
+```bash
+GET https://dummyjson.com/products/<id>
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## 🌟 **How It Works**  
 
-Now that you have successfully run the app, let's make changes!
+### **🔹 Product List**
+- On launch, products and categories are fetched using `createAsyncThunk` for clean state management.  
+- Products are displayed using a virtualized `FlatList` for efficient rendering.  
+- Searching and category-based filtering use debouncing to reduce network calls.  
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### **🔹 Product Details**
+- Clicking on a product opens the detail page using `React Navigation`.  
+- Add to cart and add to wishlist functionality updates state immediately.  
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### **🔹 Wishlist**
+- Wishlist items are stored in `AsyncStorage` and hydrated on launch.  
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### **🔹 Cart**
+- Checkbox-based selection and real-time quantity updates.  
+- Swipe to delete using `react-native-gesture-handler`.  
 
-## Congratulations! :tada:
+### **🔹 Checkout**
+- Bottom sheet displays an order summary with real-time total calculation.  
 
-You've successfully run and modified your React Native App. :partying_face:
+---
 
-### Now what?
+## 🧹 **Code Organization**  
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+```bash
+src  
+├── components/               # Reusable components  
+├── navigation/               # Stack and tab navigators  
+├── redux/                    # Redux Toolkit setup  
+├── screens/                  # Screens (ProductList, Details, Cart, etc.)  
+├── types/                    # TypeScript types  
+```
 
-# Troubleshooting
+---
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## ✅ **To Do**  
+- [ ] Add count badge for whislist and cart
+- [ ] Improve UI/UX for Better Engagement  
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---

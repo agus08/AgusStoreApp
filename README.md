@@ -148,19 +148,30 @@ GET https://dummyjson.com/products/<id>
 - Products are displayed using a virtualized `FlatList` for efficient rendering.  
 - Searching and category-based filtering use debouncing to reduce network calls.  
 
+![Alt text](screenshots/productlist.jpg)
+
 ### **🔹 Product Details**
 - Clicking on a product opens the detail page using `React Navigation`.  
 - Add to cart and add to wishlist functionality updates state immediately.  
 
+![Alt text](screenshots/productdetail.jpg)
+![Alt text](screenshots/productdetail-saved.jpg)
+
 ### **🔹 Wishlist**
 - Wishlist items are stored in `AsyncStorage` and hydrated on launch.  
+
+![Alt text](screenshots/wishlist.jpg)
 
 ### **🔹 Cart**
 - Checkbox-based selection and real-time quantity updates.  
 - Swipe to delete using `react-native-gesture-handler`.  
 
+![Alt text](screenshots/cart.jpg)
+
 ### **🔹 Checkout**
 - Bottom sheet displays an order summary with real-time total calculation.  
+
+![Alt text](screenshots/cart-summary.jpg)
 
 ---
 
